@@ -19,34 +19,30 @@ class Node {
 
 class Solution {
     public List<Integer> postorder(Node root) {
-        Stack<Node> st1=new Stack<>();
-        Stack<Node> st2=new Stack<>();
-        List<Integer> ans=new ArrayList<>();
+       Stack<Node> s1=new Stack<>();
+        Stack<Node> s2=new Stack<>();
+        List<Integer> a=new ArrayList<>();
         if(root==null)
         {
-            return ans;
+            return a;
         }
-        Node node=root;
-        st1.push(node);
-        while(!st1.isEmpty())
+        s1.push(root);
+        while(!s1.isEmpty())
         {
-            node=st1.pop();
-            st2.push(node);
+            Node node=s1.pop();
+            s2.push(node);
             for(int i=0;i<node.children.size();i++)
             {
                 if(node.children.get(i)!=null)
                 {
-                    st1.push(node.children.get(i));
+                    s1.push(node.children.get(i));
                 }
             }
         }
-        while(!st2.isEmpty())
+        while(!s2.isEmpty())
         {
-            ans.add(st2.pop().val);
+            a.add(s2.pop().val);
         }
-        return ans;
+        return a;
     }
 }
-
-
-
