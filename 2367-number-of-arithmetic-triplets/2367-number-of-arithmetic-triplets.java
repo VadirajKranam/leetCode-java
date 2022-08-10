@@ -3,16 +3,31 @@ class Solution {
        int count=0;
         for(int i=0;i<nums.length-2;i++)
         {
-            for(int j=i+1;j<nums.length-1;j++)
+           boolean check=false;
+            int j=i+1;
+            while(j<nums.length-1)
             {
-                for(int k=j+1;k<nums.length;k++)
+                if(nums[j]-nums[i]==diff)
                 {
-                    if(nums[j]-nums[i]==diff && nums[k]-nums[j]==diff)
+                    check=true;
+                    break;
+                }
+                j++;
+            }
+            if(check)
+            {
+                int k=j+1;
+                while(k<nums.length)
+                {
+                    if(nums[k]-nums[j]==diff)
                     {
                         count++;
+                        break;
                     }
+                    k++;
                 }
             }
+            
         }
         return count;
     }
