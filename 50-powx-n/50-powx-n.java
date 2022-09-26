@@ -1,8 +1,8 @@
 class Solution {
     public double myPow(double x, int n) {
+        long nn=(long)(n);
         double ans=1.0;
-        long nn=n;
-        if(nn<1)
+        if(nn<0)
         {
             nn*=-1;
         }
@@ -11,7 +11,7 @@ class Solution {
             if(nn%2==1)
             {
                 ans=ans*x;
-                nn=nn-1;
+                nn--;
             }
             else
             {
@@ -21,7 +21,7 @@ class Solution {
         }
         if(n<0)
         {
-            return (double)(1.0)/ans;
+            return 1/ans;
         }
         return ans;
     }
