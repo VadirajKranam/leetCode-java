@@ -1,25 +1,19 @@
 class Solution {
     public int rob(int[] nums) {
-        int[] dp=new int[nums.length];
+       int[] dp=new int[nums.length];
         Arrays.fill(dp,-1);
-        return subSum(nums,nums.length-1,dp);  
-    }
-    public int subSum(int[] nums,int index,int[] dp)
-    {
-        if(index==0)
+        dp[0]=nums[0];
+        int neg=0;
+        for(int i=1;i<nums.length;i++)
         {
-            return nums[index];
+            int take=nums[i];
+            if(i>1)
+            {
+                take+=dp[i-2];
+            }
+            int notPick=dp[i-1];
+            dp[i]=Math.max(take,notPick);
         }
-        if(index<0)
-        {
-            return 0;
-        }
-        if(dp[index]!=-1)
-        {
-            return dp[index];
-        }
-        int pick=nums[index]+subSum(nums,index-2,dp);
-        int notPick=subSum(nums,index-1,dp);
-        return dp[index]=Math.max(pick,notPick);
+        return dp[dp.length-1];
     }
 }
