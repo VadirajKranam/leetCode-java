@@ -11,10 +11,7 @@ class Solution {
         {
             dp[m-1][i]=triangle.get(m-1).get(i);
         }
-        for(int i=0;i<dp.length;i++)
-        {
-            System.out.println(Arrays.toString(dp[i]));
-        }
+        
         for(int i=m-2;i>=0;i--)
         {
             for(int j=0;j<triangle.get(i).size();j++)
@@ -28,10 +25,7 @@ class Solution {
                 dp[i][j]=Math.min(up,down);
             }
         }
-        for(int i=0;i<dp.length;i++)
-        {
-            System.out.println(Arrays.toString(dp[i]));
-        }
+       
         return dp[0][0];
     }
 }
