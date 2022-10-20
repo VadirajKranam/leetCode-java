@@ -18,11 +18,8 @@ class Solution {
             {
                 int up=triangle.get(i).get(j)+dp[i+1][j];
                 int down=9999999;
-               
-                
                     down=triangle.get(i).get(j)+dp[i+1][j+1];
-                
-                dp[i][j]=Math.min(up,down);
+                   dp[i][j]=Math.min(up,down);
             }
         }
        
