@@ -3,14 +3,37 @@ class Solution {
         int[][] dp=new int[coins.length][amount+1];
         for(int[] r:dp)
         {
-            Arrays.fill(r,-1);
+            Arrays.fill(r,0);
         }
-        int ans=function(coins.length-1,coins,amount,dp);
-        if(ans==9999999)
+       for(int i=0;i<=amount;i++)
+       {
+           if(i%coins[0]==0)
+           {
+               dp[0][i]=i/coins[0];
+           }
+           else
+           {
+               dp[0][i]=9999999;
+           }
+       }
+        for(int ind=1;ind<coins.length;ind++)
+        {
+            for(int target=0;target<=amount;target++)
+            {
+                int notPick=dp[ind-1][target];
+                int pick=Integer.MAX_VALUE;
+                if(coins[ind]<=target)
+                {
+                    pick=1+dp[ind][target-coins[ind]];
+                }
+                dp[ind][target]=Math.min(notPick,pick);
+            }
+        }
+        if(dp[coins.length-1][amount]==9999999)
         {
             return -1;
         }
-        return ans;
+        return dp[coins.length-1][amount];
     }
     public int function(int ind,int[] coins,int sum,int[][] dp)
     {
