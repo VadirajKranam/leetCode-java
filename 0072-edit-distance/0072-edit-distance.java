@@ -3,9 +3,34 @@ class Solution {
         int[][] dp=new int[s1.length()+1][s2.length()+1];
         for(int[] r:dp)
         {
-            Arrays.fill(r,-1);
+            Arrays.fill(r,0);
         }
-        return function(s1.length()-1,s2.length()-1,s1,s2,dp);
+        for(int i=0;i<=s1.length();i++)
+        {
+            dp[i][0]=i;
+        }
+        for(int i=0;i<=s2.length();i++)
+        {
+            dp[0][i]=i;
+        }
+        for(int i1=1;i1<=s1.length();i1++)
+        {
+            for(int i2=1;i2<=s2.length();i2++)
+            {
+                if(s1.charAt(i1-1)==s2.charAt(i2-1))
+                {
+                    dp[i1][i2]=dp[i1-1][i2-1];
+                }
+                else
+                {
+                    int k1=1+dp[i1][i2-1];
+                    int k2=1+dp[i1-1][i2];
+                    int k3=1+dp[i1-1][i2-1];
+                    dp[i1][i2]=Math.min(k1,Math.min(k2,k3));
+                }
+            }
+        }
+        return dp[s1.length()][s2.length()];
     }
     public int function(int i,int j,String s1,String s2,int[][] dp)
     {
