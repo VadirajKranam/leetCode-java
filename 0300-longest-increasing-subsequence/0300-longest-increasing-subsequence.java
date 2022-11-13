@@ -1,23 +1,34 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        int[] dp=new int[nums.length];
-        Arrays.fill(dp,1);
-        for(int ind=0;ind<nums.length;ind++)
+      ArrayList<Integer> ans=new ArrayList<>();
+        ans.add(nums[0]);
+        for(int i=1;i<nums.length;i++)
         {
-            for(int prev=0;prev<ind;prev++)
+            if(nums[i]>ans.get(ans.size()-1))
             {
-                if(nums[ind]>nums[prev])
+                ans.add(nums[i]);
+            }
+            else
+            {
+                int ind=Collections.binarySearch(ans,nums[i]);
+                if(ind<0)
                 {
-                    dp[ind]=Math.max(dp[ind],1+dp[prev]);
+                    int realInd=(ind+1)*-1;
+                    if(realInd>ans.size()-1)
+                    {
+                        ans.add(nums[i]);
+                    }
+                    else
+                    {
+                        ans.set(realInd,nums[i]);
+                    }
+                }
+                else
+                {
+                    ans.set(ind,nums[i]);
                 }
             }
         }
-        int max=Integer.MIN_VALUE;
-        for(int i=0;i<dp.length;i++)
-        {
-            max=Math.max(max,dp[i]);
-        }
-        return max;
-        
+        return ans.size();
     }
 }
