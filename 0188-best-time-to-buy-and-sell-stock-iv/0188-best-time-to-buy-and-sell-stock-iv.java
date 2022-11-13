@@ -5,10 +5,29 @@ class Solution {
         {
             for(int j=0;j<2;j++)
             {
-                Arrays.fill(dp[i][j],Integer.MIN_VALUE);
+                Arrays.fill(dp[i][j],0);
             }
         }
-        return function(0,prices,1,k,dp);
+        for(int ind=prices.length-1;ind>=0;ind--)
+        {
+            for(int buy=0;buy<=1;buy++)
+            {
+                for(int cap=1;cap<=k;cap++)
+                {
+                    int profit=Integer.MIN_VALUE;
+                    if(buy==1)
+                    {
+                        profit=Math.max((-prices[ind]+dp[ind+1][0][cap]),dp[ind+1][1][cap]);
+                    }
+                    else
+                    {
+                        profit=Math.max((prices[ind]+dp[ind+1][1][cap-1]),dp[ind+1][0][cap]);
+                    }
+                    dp[ind][buy][cap]=profit;
+                }
+            }
+        }
+      return   dp[0][1][k];
     }
     public int function(int ind,int[] prices,int buy,int k,int[][][] dp)
     {
