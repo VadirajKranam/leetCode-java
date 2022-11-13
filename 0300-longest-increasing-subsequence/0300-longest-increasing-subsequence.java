@@ -1,23 +1,24 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        int[][] dp=new int[nums.length+1][nums.length+1];
-        for(int i=0;i<dp.length;i++)
-        {
-            Arrays.fill(dp[i],0);
-        }
+        int[] prev=new int[nums.length+1];
+        int[] curr=new int[nums.length+1];
+        Arrays.fill(prev,0);
+        Arrays.fill(curr,0);
+        
         for(int ind=nums.length-1;ind>=0;ind--)
         {
             for(int pi=ind-1;pi>=-1;pi--)
             {
-                int len=0+dp[ind+1][pi+1];
+                int len=0+prev[pi+1];
                 if(pi==-1 || nums[ind]>nums[pi])
                 {
-                    len=Math.max(len,1+dp[ind+1][ind+1]);
+                    len=Math.max(len,1+prev[ind+1]);
                 }
-                dp[ind][pi+1]=len;
+                curr[pi+1]=len;
             }
+            prev=curr;
         }
-        return dp[0][-1+1];
+        return prev[-1+1];
     }
     public int function(int ind,int pi,int[] nums,int[][] dp)
     {
