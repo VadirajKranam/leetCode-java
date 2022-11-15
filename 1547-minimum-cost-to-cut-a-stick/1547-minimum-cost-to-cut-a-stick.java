@@ -8,13 +8,29 @@ class Solution {
             newCut[i]=cuts[i-1];
         }
         Arrays.sort(newCut);
-      int[][] dp=new int[newCut.length+1][newCut.length+1];
+      int[][] dp=new int[newCut.length+2][newCut.length+2];
         for(int i=0;i<dp.length;i++)
         {
-            Arrays.fill(dp[i],-1);
+            Arrays.fill(dp[i],0);
         }
-        // System.out.println(Arrays.toString(newCut));
-        return function(1,cuts.length,newCut,dp);
+       for(int i=cuts.length;i>=1;i--)
+       {
+           for(int j=0;j<=cuts.length;j++)
+           {
+               if(i>j)
+               {
+                   continue;
+               }
+               int min=Integer.MAX_VALUE;
+               for(int k=i;k<=j;k++)
+               {
+                   int cost=newCut[j+1]-newCut[i-1]+dp[i][k-1]+dp[k+1][j];
+                   min=Math.min(min,cost);
+               }
+               dp[i][j]=min;
+           }
+       }
+        return dp[1][cuts.length];
     }
     public int function(int i,int j,int[] cuts,int[][] dp)
     {
