@@ -1,8 +1,21 @@
 class Solution {
-    public int minCut(String s) {
-        int[] dp=new int[s.length()];
-            Arrays.fill(dp,-1);
-      return function(0,s,dp)-1;  
+    public int minCut(String str) {
+          int[]  dp=new int[str.length()+1];
+        Arrays.fill(dp,0);
+        for(int i=str.length()-1;i>=0;i--)
+        {
+            int min=Integer.MAX_VALUE;
+            for(int j=i;j<str.length();j++)
+            {
+                if(isPallindrome(i,j,str))
+                {
+                    int cost=1+dp[j+1];
+                    min=Math.min(min,cost);
+                }
+            }
+            dp[i]=min;
+        }
+        return dp[0]-1; 
     }
     public int function(int i,String s,int[] dp)
     {
