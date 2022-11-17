@@ -1,8 +1,22 @@
 class Solution {
     public int maxSumAfterPartitioning(int[] arr, int k) {
         int[] dp=new int[arr.length+1];
-        Arrays.fill(dp,-1);
-        return function(0,arr,k,dp);
+        Arrays.fill(dp,0);
+        for(int i=arr.length-1;i>=0;i--)
+        {
+             int maxAns=Integer.MIN_VALUE;
+        int maxi=Integer.MIN_VALUE;
+        int len=0;
+        for(int j=i;j<Math.min(arr.length,i+k);j++)
+        {
+            len++;
+            maxi=Math.max(maxi,arr[j]);
+            int sum=len*maxi+dp[j+1];
+            maxAns=Math.max(maxAns,sum);
+        }
+         dp[i]=maxAns%1000000007;
+        }
+        return dp[0];
     }
     public int function(int i,int[] arr,int k,int[] dp)
     {
