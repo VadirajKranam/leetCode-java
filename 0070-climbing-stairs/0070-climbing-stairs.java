@@ -2,12 +2,15 @@ class Solution {
     public int climbStairs(int n) {
         int[] dp=new int[n+1];
         Arrays.fill(dp,-1);
-        int count=dynamic(n,dp);
-        return count;
+        return function(n,dp);
     }
-    static int dynamic(int n,int[] dp)
+    public int function(int n,int[] dp)
     {
-        if(n<=1)
+        if(n<0)
+        {
+            return 0;
+        }
+        if(n==0)
         {
             return 1;
         }
@@ -15,6 +18,6 @@ class Solution {
         {
             return dp[n];
         }
-       return  dp[n]=dynamic(n-1,dp)+dynamic(n-2,dp);
+        return dp[n]=function(n-1,dp)+function(n-2,dp);
     }
 }
