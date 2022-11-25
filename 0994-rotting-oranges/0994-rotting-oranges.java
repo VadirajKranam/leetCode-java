@@ -41,7 +41,10 @@ class Solution {
             int c=q.peek().col;
             int tm=q.peek().tm;
             q.poll();
-            t=Math.max(t,tm);
+            if(t!=tm)
+            {
+                t=tm;
+            }
             for(int i=0;i<4;i++)
             {
                 int nrow=r+dr[i];
