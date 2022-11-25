@@ -74,7 +74,10 @@ class Solution
             int r=q.peek().row;
             int c=q.peek().col;
             int t=q.peek().tm;
-            tm=Math.max(tm,t);
+            if(tm!=t)
+            {
+                tm=t;
+            }
             q.poll();
             for(int i=0;i<4;i++)
             {
