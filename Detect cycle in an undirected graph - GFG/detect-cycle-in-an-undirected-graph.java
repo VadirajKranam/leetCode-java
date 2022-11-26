@@ -31,27 +31,19 @@ class GFG {
 }
 // } Driver Code Ends
 
-class Pair{
-    int f,s;
-    Pair(int f,int s)
-    {
-        this.f=f;
-        this.s=s;
-    }
-}
+
 class Solution {
     // Function to detect cycle in an undirected graph.
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         int[] vis=new int[V];
         Arrays.fill(vis,0);
-      
         for(int i=0;i<adj.size();i++)
         {
             for(int j=0;j<adj.get(i).size();j++)
             {
                 if(vis[adj.get(i).get(j)]==0)
                 {
-                    if(detect(adj.get(i).get(j),adj,vis))
+                    if(dfs(adj.get(i).get(j),-1,adj,vis))
                     {
                         return true;
                     }
@@ -60,38 +52,23 @@ class Solution {
         }
         return false;
     }
-    public boolean detect(int src,ArrayList<ArrayList<Integer>> adj,int[] vis)
+    public boolean dfs(int node,int parent,ArrayList<ArrayList<Integer>> adj,int[] vis)
     {
-        vis[src]=1;
-        Queue<Pair> q=new LinkedList<>();
-        q.offer(new Pair(src,-1));
-        while(!q.isEmpty())
+        vis[node]=1;
+        for(int i=0;i<adj.get(node).size();i++)
         {
-            int node=q.peek().f;
-            int parent=q.peek().s;
-            q.poll();
-            for(int an : adj.get(node))
+            if(vis[adj.get(node).get(i)]==0)
             {
-                if(vis[an]==0)
-                {
-                    vis[an]=1;
-                    q.offer(new Pair(an,node));
-                }
-                else if(parent!=an)
+                if(dfs(adj.get(node).get(i),node,adj,vis))
                 {
                     return true;
                 }
+            }
+            else if(parent!=adj.get(node).get(i))
+            {
+                return true;
             }
         }
         return false;
     }
 }
-
-
-
-
-
-
-
-
-
