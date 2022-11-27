@@ -43,33 +43,20 @@ class Solution{
     static char[][] fill(int n, int m, char a[][])
     {
         int[][] vis=new int[a.length][a[0].length];
-        for(int j=0;j<a[0].length;j++)
-        {
-            if(a[0][j]=='O')
-            {
-                dfs(0,j,a,vis);
-            }
-        }
         for(int i=0;i<a.length;i++)
         {
-            if(a[i][a[0].length-1]=='O')
-            {
-                dfs(i,a[0].length-1,a,vis);
-            }
-        }
-        for(int j=0;j<a[0].length;j++)
-        {
-            if(a[a.length-1][j]=='O')
-            {
-                dfs(a.length-1,j,a,vis);
-            }
-        }
-        for(int i=0;i<a.length;i++)
-        {
-            if(a[i][0]=='O')
-            {
-                dfs(i,0,a,vis);
-            }
+           for(int j=0;j<a[i].length;j++)
+           {
+               if(i==0 || j==0 || i==a.length-1 || j==a[0].length-1)
+               {
+                    if(a[i][j]=='O')
+               {
+                    dfs(i,j,a,vis);
+               }
+                  
+               }
+              
+           }
         }
         char[][] ans=new char[a.length][a[0].length];
         for(int i=0;i<vis.length;i++)
