@@ -58,7 +58,7 @@ class Solution {
        List<Integer> safeNodes=new ArrayList<>();
        for(int i=0;i<V;i++)
        {
-           if(check[i]==1)
+           if(pv[i]==0)
            {
                safeNodes.add(i);
            }
@@ -69,7 +69,7 @@ class Solution {
     {
         vis[node]=1;
         pv[node]=1;
-        check[node]=0;
+       // check[node]=0;
         for(int i : adj.get(node))
         {
             if(vis[i]==0)
@@ -84,7 +84,7 @@ class Solution {
                 return true;
             }
         }
-        check[node]=1;
+       // check[node]=1;
         pv[node]=0;
         return false;
     }
