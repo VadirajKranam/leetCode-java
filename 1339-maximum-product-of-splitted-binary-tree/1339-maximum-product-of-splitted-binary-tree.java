@@ -14,29 +14,31 @@
  * }
  */
 class Solution {
-    long max=0;
-    long sum=0;
-    public int maxProduct(TreeNode root) {
-        sum=dfs(root);
-        solve(root);
-        return (int)(max%1000000007);
-    }
-    public int dfs(TreeNode root)
+    public int getSum(TreeNode root,ArrayList<Integer> a)
     {
         if(root==null)
         {
             return 0;
         }
-        return root.val=root.val+dfs(root.left)+dfs(root.right);
+        int ls=getSum(root.left,a);
+        int rs=getSum(root.right,a);
+        int ts=root.val+ls+rs;
+        a.add(ts);
+        return ts;
     }
-    public void solve(TreeNode root)
-    {
+    public int maxProduct(TreeNode root) {
         if(root==null)
         {
-            return;
+            return 0;
         }
-        max=Math.max(max,root.val*(sum-root.val));
-        solve(root.left);
-        solve(root.right);
+        long max=0;
+        ArrayList<Integer> a=new ArrayList<>();
+        int sum=getSum(root,a);
+        for(long t:a)
+        {
+            long pro=t*(sum-t);
+            max=Math.max(max,pro);
+        }
+        return (int)(max%1000000007);
     }
 }
