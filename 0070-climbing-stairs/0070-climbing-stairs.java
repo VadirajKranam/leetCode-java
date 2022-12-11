@@ -18,6 +18,6 @@ class Solution {
         {
             return dp[n];
         }
-        return dp[n]=function(n-1,dp)+function(n-2,dp);
+       return dp[n]=function(n-1,dp)+function(n-2,dp);
     }
 }
