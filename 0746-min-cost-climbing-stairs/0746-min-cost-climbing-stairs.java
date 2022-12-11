@@ -1,18 +1,21 @@
 class Solution {
     public int minCostClimbingStairs(int[] cost) {
-       int[] dp=new int[cost.length+1];
+        int[] dp=new int[cost.length+1];
         Arrays.fill(dp,-1);
-        return Math.min(function(0,cost,dp),function(1,cost,dp));
+        int ans1=function(0,cost,dp);
+        Arrays.fill(dp,-1);
+        int ans2=function(1,cost,dp);
+        return Math.min(ans1,ans2);
     }
     public int function(int i,int[] cost,int[] dp)
     {
-        if(i>=cost.length)
+        if(i>cost.length)
+        {
+            return 99999999;
+        }
+        if(i==cost.length)
         {
             return 0;
-        }
-        if(i==cost.length-1)
-        {
-            return cost[i];
         }
         if(dp[i]!=-1)
         {
