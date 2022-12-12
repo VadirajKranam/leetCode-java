@@ -1,33 +1,37 @@
 class Solution {
     public boolean canJump(int[] nums) {
-        int[] dp=new int[nums.length+1];
+        if(nums.length==1)
+        {
+            return true;
+        }
+       int[] dp=new int[nums.length+1];
         Arrays.fill(dp,-1);
-        return function(0,nums,dp)==1;
+        return function(0,nums,dp);
     }
-    public int function(int ind,int[] nums,int[] dp)
+    public boolean function(int ind,int[] nums,int[] dp)
     {
         if(ind==nums.length-1)
         {
-            return 1;
+            return true;
         }
         if(ind>=nums.length)
         {
-            return 0;
+            return false;
         }
         if(dp[ind]!=-1)
         {
-            return dp[ind];
+            return dp[ind]==1;
         }
-        int ans=0;
         for(int i=1;i<=nums[ind];i++)
         {
-            int k=function(ind+i,nums,dp);
-            if(k==1)
+            if(function(ind+i,nums,dp))
             {
-                ans=k;
-                break;
+                dp[ind]=1;
+                return true;
             }
         }
-        return dp[ind]=ans;
+        
+        dp[ind]=0;
+        return false;
     }
 }
