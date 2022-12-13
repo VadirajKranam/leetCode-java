@@ -1,39 +1,40 @@
 class Solution {
     public int minFallingPathSum(int[][] matrix) {
-        int n=matrix.length;
-        int[][] dp=new int[n][n];
-        for(int[] row:dp)
+        int[][] dp=new int[matrix.length][matrix[0].length];
+        for(int[] d:dp)
         {
-            Arrays.fill(row,Integer.MAX_VALUE);
+            Arrays.fill(d,-1);
         }
-        int ans=Integer.MAX_VALUE;
-        for(int i=0;i<matrix[0].length;i++)
+        int ans=99999999;
+        for(int j=0;j<matrix[0].length;j++)
         {
-            ans=Math.min(function(0,i,matrix,dp),ans);
-           for(int[] row:dp)
-           {
-            Arrays.fill(row,Integer.MAX_VALUE);
-           } 
+            ans=Math.min(ans,function(0,j,matrix,dp));
+            for(int[] d:dp)
+        {
+            Arrays.fill(d,-1);
+        }
         }
         return ans;
+        
     }
-    public int function(int m,int n,int[][] matrix,int[][] dp)
+    public int function(int i,int j,int[][] matrix,int[][] dp)
     {
-        if(m>=matrix.length || n>=matrix[0].length || n<0)
+        if(i<0 || j<0 || i>=matrix.length || j>=matrix[0].length)
         {
-            return 9999999;
+            return 99999999;
         }
-        if(m==matrix.length-1)
+        if(i==matrix.length-1)
         {
-            return matrix[m][n];
+            return matrix[i][j];
         }
-        if(dp[m][n]!=Integer.MAX_VALUE)
+        if(dp[i][j]!=-1)
         {
-            return dp[m][n];
+            return dp[i][j];
         }
-        int dleft=matrix[m][n]+function(m+1,n-1,matrix,dp);
-        int d=matrix[m][n]+function(m+1,n,matrix,dp);
-        int dright=matrix[m][n]+function(m+1,n+1,matrix,dp);
-        return dp[m][n]=Math.min(d,Math.min(dleft,dright));
+        int min=99999999;
+        min=Math.min(min,matrix[i][j]+function(i+1,j-1,matrix,dp));
+        min=Math.min(min,matrix[i][j]+function(i+1,j,matrix,dp));
+        min=Math.min(min,matrix[i][j]+function(i+1,j+1,matrix,dp));
+        return dp[i][j]=min;
     }
 }
