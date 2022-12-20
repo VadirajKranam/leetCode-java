@@ -44,48 +44,44 @@ class GFG {
 class Solution {
 
     List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
-       int[] vis=new int[V];
-       int[] pv=new int[V];
-       int[] check=new int[V];
-       Arrays.fill(vis,0);
-       for(int i=0;i<V;i++)
-       {
-           if(vis[i]==0)
-           {
-               dfs(i,adj,vis,pv,check);
-           }
-       }
-       List<Integer> safeNodes=new ArrayList<>();
-       for(int i=0;i<V;i++)
-       {
-           if(pv[i]==0)
-           {
-               safeNodes.add(i);
-           }
-       }
-       return safeNodes;
-    }
-    public boolean dfs(int node,List<List<Integer>> adj,int[] vis,int[] pv,int[] check)
+     List<List<Integer>> adjrev=new ArrayList<>();
+    for(int i=0;i<V;i++)
     {
-        vis[node]=1;
-        pv[node]=1;
-       // check[node]=0;
-        for(int i : adj.get(node))
-        {
-            if(vis[i]==0)
-            {
-                if(dfs(i,adj,vis,pv,check)==true)
-                {
-                    return true;
-                }
-            }
-            else if(pv[i]==1)
-            {
-                return true;
-            }
-        }
-       // check[node]=1;
-        pv[node]=0;
-        return false;
+        adjrev.add(new ArrayList<>());
+    }
+       int[] indegree=new int[V];
+       Arrays.fill(indegree,0);
+       for(int i=0;i<V;i++)
+       {
+           for(int it:adj.get(i))
+           {
+               adjrev.get(it).add(i);
+               indegree[i]++;
+           }
+       }
+       Queue<Integer> q=new LinkedList<>();
+       List<Integer> safeNodes=new ArrayList<>();
+       for(int i=0;i<indegree.length;i++)
+       {
+           if(indegree[i]==0)
+           {
+               q.offer(i);
+           }
+       }
+       while(!q.isEmpty())
+       {
+           int node=q.poll();
+           safeNodes.add(node);
+           for(int it:adjrev.get(node))
+           {
+               indegree[it]--;
+               if(indegree[it]==0)
+               {
+                   q.offer(it);
+               }
+           }
+       }
+       Collections.sort(safeNodes);
+       return safeNodes;
     }
 }
