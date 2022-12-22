@@ -30,91 +30,73 @@ class Main {
 
 //User function Template for Java
 class Pair{
-    int n,w;
-    Pair(int n,int w)
+    int f,s;
+    Pair(int f,int s)
     {
-        this.n=n;
-        this.w=w;
+        this.f=f;
+        this.s=s;
     }
 }
 class Solution {
 
 	public int[] shortestPath(int N,int M, int[][] edges) {
-	     ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
-	     for(int i=0;i<N;i++)
-	     {
-	         adj.add(new ArrayList<>());
-	     }
-	     int[] vis=new int[N];
-	     Arrays.fill(vis,-1);
-	     Stack<Integer> s=new Stack<>();
-	     for(int i=0;i<edges.length;i++)
-	     {
-	         int u=edges[i][0];
-	         int v=edges[i][1];
-	         int w=edges[i][2];
-	         adj.get(u).add(new Pair(v,w));
-	     }
-	     for(int i=0;i<N;i++)
-	     {
-	         if(vis[i]==-1)
-	         {
-	             topoSort(i,adj,vis,s);
-	         }
-	     }
-	     int[] dist=new int[N];
-	     for(int i=0;i<dist.length;i++)
-	     {
-	         dist[i]=9999999;
-	     }
-	     dist[0]=0;
-	     while(!s.isEmpty())
-	     {
-	         int node=s.pop();
-	         for(int i=0;i<adj.get(node).size();i++)
-	         {
-	             int v=adj.get(node).get(i).n;
-	             int w=adj.get(node).get(i).w;
-	             if((dist[node]+w)<dist[v])
-	             {
-	                 dist[v]=dist[node]+w;
-	             }
-	         }
-	     }
-	     for(int i=0;i<N;i++)
-	     {
-	         if(dist[i]==9999999)
-	         {
-	             dist[i]=-1;
-	         }
-	     }
-	     return dist;
+		ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+		for(int i=0;i<N;i++)
+		{
+		    adj.add(new ArrayList<>());
+		}
+		for(int i=0;i<edges.length;i++)
+		{
+		    int u=edges[i][0];
+		    int v=edges[i][1];
+		    int w=edges[i][2];
+		    adj.get(u).add(new Pair(v,w));
+		}
+		int[] vis=new int[N];
+		Arrays.fill(vis,-1);
+		Stack<Integer> s=new Stack<>();
+		for(int i=0;i<vis.length;i++)
+		{
+		    if(vis[i]==-1)
+		    {
+		        dfs(i,adj,vis,s);
+		    }
+		}
+		int[] dis=new int[N];
+		Arrays.fill(dis,9999999);
+		dis[0]=0;
+		while(!s.isEmpty())
+		{
+		    int node=s.pop();
+		    for(int i=0;i<adj.get(node).size();i++)
+		    {
+		        int v=adj.get(node).get(i).f;
+		        int w=adj.get(node).get(i).s;
+		        if((dis[node]+w)<dis[v])
+		        {
+		            dis[v]=dis[node]+w;
+		        }
+		    }
+		}
+		for(int i=0;i<dis.length;i++)
+		{
+		    if(dis[i]==9999999)
+		    {
+		        dis[i]=-1;
+		    }
+		}
+		return dis;
 	}
-	public void topoSort(int node,ArrayList<ArrayList<Pair>> adj,int[] vis,Stack<Integer> s)
+	public void dfs(int node,ArrayList<ArrayList<Pair>> adj,int[] vis,Stack<Integer> s)
 	{
 	    vis[node]=1;
 	    for(int i=0;i<adj.get(node).size();i++)
 	    {
-	        int v=adj.get(node).get(i).n;
-	        if(vis[v]==-1)
+	        if(vis[adj.get(node).get(i).f]==-1)
 	        {
-	            topoSort(v,adj,vis,s);
+	            dfs(adj.get(node).get(i).f,adj,vis,s);
 	        }
 	    }
 	    s.push(node);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
