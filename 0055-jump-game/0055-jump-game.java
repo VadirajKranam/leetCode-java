@@ -1,9 +1,6 @@
 class Solution {
     public boolean canJump(int[] nums) {
-        if(nums.length==1)
-        {
-            return true;
-        }
+        
         int[] dp=new int[nums.length+1];
         Arrays.fill(dp,-1);
         return function(0,nums,dp);
