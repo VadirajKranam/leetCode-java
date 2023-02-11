@@ -16,20 +16,21 @@ class MyQueue {
     }
     
     public int pop() {
-        int size=s1.size();
-        while(size!=1)
+        while(!s1.isEmpty())
         {
-            int x=s1.pop();
-            s2.push(x);
-            size--;
-            top=x;
+            s2.push(s1.pop());
         }
-        int ele=s1.pop();
-    
+        int ele=s2.pop();
+        if(!s2.isEmpty())
+        {
+            top=s2.peek();
+        }else{
+            top=-1;
+        }
+        
         while(!s2.isEmpty())
         {
-            int x=s2.pop();
-            s1.push(x);
+            s1.push(s2.pop());
         }
         return ele;
     }
