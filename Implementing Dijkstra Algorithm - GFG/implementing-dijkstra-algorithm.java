@@ -55,8 +55,7 @@ class DriverClass
 //User function Template for Java
 class Pair{
     int a,b;
-    Pair(int a,int b)
-    {
+    Pair(int a,int b){
         this.a=a;
         this.b=b;
     }
@@ -68,29 +67,28 @@ class Solution
     //from the source vertex S.
     static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
     {
-       PriorityQueue<Pair> pq=new PriorityQueue<Pair>((x,y)->x.b-y.b);
-       int[] dis=new int[V];
-       Arrays.fill(dis,Integer.MAX_VALUE);
-       dis[S]=0;
-       pq.add(new Pair(S,0));
-       while(!pq.isEmpty())
-       {
-           int dist=pq.peek().b;
-           int node=pq.peek().a;
-           pq.remove();
-           for(int i=0;i<adj.get(node).size();i++)
-           {
-               int edgeWeight=adj.get(node).get(i).get(1);
-               int adjNode=adj.get(node).get(i).get(0);
-               
-               if(dist+edgeWeight<dis[adjNode])
-               {
-                   dis[adjNode]=dist+edgeWeight;
-                   pq.add(new Pair(adjNode,dis[adjNode]));
-               }
-           }
-       }
-       return dis;
+        PriorityQueue<Pair> pq=new PriorityQueue<Pair>((x,y)->x.b-y.b);
+        int[] dist=new int[V];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[S]=0;
+        pq.add(new Pair(S,0));
+        while(!pq.isEmpty())
+        {
+            int dis=pq.peek().b;
+            int node=pq.peek().a;
+            pq.remove();
+            for(int i=0;i<adj.get(node).size();i++)
+            {
+                int adjNode=adj.get(node).get(i).get(0);
+                int ew=adj.get(node).get(i).get(1);
+                if(dis+ew<dist[adjNode])
+                {
+                    dist[adjNode]=dis+ew;
+                    pq.add(new Pair(adjNode,dist[adjNode]));
+                }
+            }
+        }
+        return dist;
     }
 }
 
