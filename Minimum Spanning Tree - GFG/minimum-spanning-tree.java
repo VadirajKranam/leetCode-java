@@ -32,17 +32,84 @@ public class Main{
 
 
 // User function Template for Java
+class Edge implements Comparable<Edge>{
+    int src,dest,weight;
+    Edge(int src,int dest,int weight)
+    {
+        this.src=src;
+        this.dest=dest;
+        this.weight=weight;
+    }
+    public int compareTo(Edge compareEdge)
+    {
+        return this.weight-compareEdge.weight;
+    }
+};
 class Pair{
     int a,b;
-    Pair(int a,int b){
+    Pair(int a,int b)
+    {
         this.a=a;
         this.b=b;
     }
 }
+class DisjointSet{
+   List<Integer> rank=new ArrayList<>();
+   List<Integer> parent=new ArrayList<>();
+    List<Integer> size=new ArrayList<>();
+   DisjointSet(int n){
+       for(int i=0;i<=n;i++){
+           rank.add(0);
+           parent.add(i);
+           size.add(1);
+       }
+   }
+   public int findUPar(int node){
+       if(node==parent.get(node))
+       {
+           return node;
+       }
+       int ulp=findUPar(parent.get(node));
+       parent.set(node,ulp);
+       return parent.get(node);
+   }
+   public void unionByRank(int u,int v){
+       int ulp_u=findUPar(u);
+       int ulp_v=findUPar(v);
+       if(ulp_u==ulp_v)
+       {
+           return;
+       }
+       else if(rank.get(ulp_u)<rank.get(ulp_v)){
+           parent.set(ulp_u,ulp_v);
+       }
+       else if(rank.get(ulp_u)>rank.get(ulp_v)){
+           parent.set(ulp_v,ulp_u);
+       }
+       else{
+           parent.set(ulp_v,ulp_u);
+           rank.set(ulp_u,rank.get(ulp_u)+1);
+       }
+   }
+    public void unionBySize(int u,int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) {
+            return;
+        }
+        if(size.get(ulp_u)<size.get(ulp_v)){
+            parent.set(ulp_u,ulp_v);
+            size.set(ulp_v,size.get(ulp_v)+size.get(ulp_u));
+        }
+        else{
+            parent.set(ulp_v,ulp_u);
+            size.set(ulp_u,size.get(ulp_u)+size.get(ulp_v));
+        }
+    }
+};
 class Solution{
 	static int spanningTree(int V, int E, int edges[][]){
-	   PriorityQueue<Pair> pq=new PriorityQueue<>((x,y)->x.a-y.a);
-	   int sum=0;
+	   List<Edge> edges1=new ArrayList<Edge>();
 	   ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
 	   for(int i=0;i<V;i++)
 	   {
@@ -51,33 +118,32 @@ class Solution{
 	   for(int i=0;i<edges.length;i++)
 	   {
 	       adj.get(edges[i][0]).add(new Pair(edges[i][1],edges[i][2]));
-	       adj.get(edges[i][1]).add(new Pair(edges[i][0],edges[i][2]));
+	       //adj.get(edges[i][1]).add(new Pair(edges[i][0],edges[i][2]));
 	   }
-	   int[] vis=new int[V];
-	   Arrays.fill(vis,0);
-	   // {wt,node}
-	   pq.offer(new Pair(0,0));
-	   while(!pq.isEmpty())
+	   for(int i=0;i<V;i++)
 	   {
-	       int node=pq.peek().b;
-	       int wt=pq.peek().a;
-	       pq.poll();
-	       if(vis[node]==1)
-	       {
-	           continue;
-	       }
-	       vis[node]=1;
-	       sum+=wt;
-	       for(int i=0;i<adj.get(node).size();i++)
-	       {
-	           int adjNode=adj.get(node).get(i).a;
-	           int ew=adj.get(node).get(i).b;
-	           if(vis[adjNode]==0)
-	           {
-	               pq.offer(new Pair(ew,adjNode));
-	           }
+	       for(int j=0;j<adj.get(i).size();j++){
+	           int adjNode=adj.get(i).get(j).a;
+	           int wt=adj.get(i).get(j).b;
+	           int node=i;
+	           Edge temp=new Edge(i,adjNode,wt);
+	           edges1.add(temp);
 	       }
 	   }
-	   return sum;
+	   DisjointSet ds=new DisjointSet(V);
+	   Collections.sort(edges1);
+	   int mstWt=0;
+	   for(int i=0;i<edges1.size();i++){
+	       int wt=edges1.get(i).weight;
+	       int u=edges1.get(i).src;
+	       int v=edges1.get(i).dest;
+	       if(ds.findUPar(u)!=ds.findUPar(v))
+	       {
+	           mstWt+=wt;
+	           ds.unionBySize(u,v);
+	       }
+	   }
+	   return mstWt;
 	}
+	
 }
