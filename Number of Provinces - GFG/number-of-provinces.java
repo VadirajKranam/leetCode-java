@@ -33,43 +33,32 @@ class GFG {
 
 class Solution {
     static int numProvinces(ArrayList<ArrayList<Integer>> adj, int V) {
-       ArrayList<Integer>[] a=new ArrayList[V];
-       for(int i=0;i<a.length;i++)
-       {
-           a[i]=new ArrayList<>();
-       }
-       for(int i=0;i<V;i++)
-       {
-           for(int j=0;j<V;j++)
-           {
-               if(adj.get(i).get(j)==1 && i!=j)
-               {
-                   a[i].add(j);
-                   a[j].add(i);
-               }
-           }
-       }
-       int[] vis=new int[V];
-       Arrays.fill(vis,0);
-       int count=0;
-       for(int i=0;i<vis.length;i++)
-       {
-           if(vis[i]==0)
-           {
-               count++;
-               dfs(i,a,vis);
-           }
-       }
-       return count;
+      int[] vis=new int[V];
+      int count=0;
+      Arrays.fill(vis,0);
+      for(int i=0;i<vis.length;i++)
+      {
+          if(vis[i]==0)
+          {
+              count++;
+              dfs(i,adj,vis);
+          }
+      }
+      return count;
     }
-    static void dfs(int node, ArrayList<Integer>[] a,int[] vis)
-    {
-        vis[node]=1;
-        for(int i=0;i<a[node].size();i++)
-        {
-            if(vis[a[node].get(i)]==0){
-            dfs(a[node].get(i),a,vis);
-            }
-        }
-    }
+  public static void dfs(int node,ArrayList<ArrayList<Integer>> adj,int[] vis)
+  {
+      if(vis[node]==1)
+      {
+          return;
+      }
+      vis[node]=1;
+      for(int i=0;i<adj.get(node).size();i++)
+      {
+          if(adj.get(node).get(i)==1)
+          {
+              dfs(i,adj,vis);
+          }
+      }
+  }
 };
