@@ -13,10 +13,40 @@ import java.util.*;
 class Solution {
     Long maxTripletProduct(Long arr[], int n)
     {
-        Arrays.sort(arr);
-        Long product1=arr[arr.length-1]*arr[arr.length-2]*arr[arr.length-3];
-        Long product2=arr[0]*arr[1]*arr[arr.length-1];
-        return Math.max(product1,product2);
+       Long mx1=Long.MIN_VALUE,mx2=Long.MIN_VALUE,mx3=Long.MIN_VALUE;
+       Long mn1=Long.MAX_VALUE,mn2=Long.MAX_VALUE;
+       for(int i=0;i<arr.length;i++)
+       {
+           if(arr[i]>mx1)
+           {
+               Long t1=mx1;
+               mx1=arr[i];
+               Long t2=mx2;
+               mx2=t1;
+               mx3=t2;
+           }
+           else if(arr[i]>mx2)
+           {
+               Long t=mx2;
+               mx2=arr[i];
+               mx3=t;
+           }
+           else if(arr[i]>mx3)
+           {
+               mx3=arr[i];
+           }
+           if(arr[i]<mn1)
+           {
+               Long t=mn1;
+               mn1=arr[i];
+               mn2=t;
+           }
+           else if(arr[i]<mn2)
+           {
+               mn2=arr[i];
+           }
+       }
+       return Math.max((mx1*mx2*mx3),(mn1*mn2*mx1));
     }
 }
 
