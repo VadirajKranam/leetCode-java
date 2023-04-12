@@ -50,20 +50,20 @@ class Solution
         Arrays.sort(arr);
         Arrays.sort(dep);
         int i=0,j=1;
-        int platNeeded=1;
+        int curFilled=1;
         int result=1;
         while(i<n && j<n)
         {
             if(arr[j]<=dep[i])
             {
-                platNeeded++;
+                curFilled++;
                 j++;
-                result=Math.max(result,platNeeded);
+                result=Math.max(result,curFilled);
             }
             else
             {
                 i++;
-                platNeeded--;
+                curFilled--;
             }
         }
         return result;
