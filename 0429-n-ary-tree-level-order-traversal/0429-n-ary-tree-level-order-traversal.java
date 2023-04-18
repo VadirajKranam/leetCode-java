@@ -19,7 +19,6 @@ class Node {
 
 class Solution {
     public List<List<Integer>> levelOrder(Node root) {
-       
         Queue<Node> q=new LinkedList<>();
         List<List<Integer>> ans=new ArrayList<>();
          if(root==null)
@@ -27,7 +26,6 @@ class Solution {
          return ans;   
         }
         q.offer(root);
-        //ans.add(new ArrayList<>(root.val));
         int size=1;
         while(!q.isEmpty())
         {
