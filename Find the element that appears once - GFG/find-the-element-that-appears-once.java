@@ -33,17 +33,11 @@ class Sol
 {
     public static int search(int A[], int N)
     {
-        for(int i=0;i<A.length-1;i++)
+        int ans=0;
+        for(int i=0;i<A.length;i++)
         {
-            if(A[i]!=A[i+1])
-            {
-                return A[i];
-            }
-            else
-            {
-                i++;
-            }
+            ans=ans^A[i];
         }
-        return A[N-1];
+        return ans;
     }
 }
