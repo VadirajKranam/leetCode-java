@@ -29,13 +29,19 @@ class GFG {
 
 class Solution {
     static int canReach(int[] A, int N) {
-        return function(0,A);
+        int[] dp=new int[A.length];
+        Arrays.fill(dp,-1);
+        return function(0,A,dp);
     }
-    static int function(int ind,int[] A)
+    static int function(int ind,int[] A,int[] dp)
     {
         if(ind==A.length-1)
         {
             return 1;
+        }
+        if(dp[ind]!=-1)
+        {
+            return dp[ind];
         }
         if(ind>=A.length || A[ind]==0)
         {
@@ -43,11 +49,11 @@ class Solution {
         }
         for(int j=1;j<=A[ind];j++)
         {
-            if(function(ind+j,A)==1)
+            if(function(ind+j,A,dp)==1)
             {
-                return 1;
+                return dp[ind+j]=1;
             }
         }
-        return 0;
+        return dp[ind]=0;
     }
 };
