@@ -8,6 +8,7 @@ class Solution {
         {
             return 0;
         }
-        return 1+total/cost2+function(total-cost1,cost1,cost2);
+      
+        return 1+total/cost1+function(total-cost2,cost1,cost2);
     }
 }
