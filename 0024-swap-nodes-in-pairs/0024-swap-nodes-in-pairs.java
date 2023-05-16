@@ -1,40 +1,41 @@
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode swapPairs(ListNode head) {
-        ArrayList<ListNode> a=new ArrayList<>();
-        ListNode t=head;
-        while(t!=null)
+public:
+    ListNode* swapPairs(ListNode* head) {
+        vector<ListNode*> a;
+        ListNode *t=head;
+        while(t!=NULL)
         {
-            a.add(t);
-            t=t.next;
+            a.push_back(t);
+            t=t->next;
         }
-         if(a.size()==1 || a.size()==0)
+        if(a.size()<=1)
         {
             return head;
         }
         for(int i=0;i<a.size()-1;i+=2)
         {
-            ListNode t1=a.get(i);
-            a.set(i,a.get(i+1));
-            a.set(i+1,t1);
+            ListNode *t1=a[i];
+            a[i]=a[i+1];
+            a[i+1]=t1;
         }
-        a.get(a.size()-1).next=null;
-        head=a.get(0);
+        a[a.size()-1]->next=NULL;
+        head=a[0];
         t=head;
         for(int i=1;i<a.size();i++)
         {
-            t.next=a.get(i);
-            t=t.next;
+            t->next=a[i];
+            t=t->next;
         }
         return head;
     }
-}
+};
