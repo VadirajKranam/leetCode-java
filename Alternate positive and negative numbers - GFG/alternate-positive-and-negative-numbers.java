@@ -39,50 +39,36 @@ public class Main {
 
 class Solution {
     void rearrange(int arr[], int n) {
-        ArrayList<Integer> pos=new ArrayList<>();
-        ArrayList<Integer> neg=new ArrayList<>();
-        for(int i=0;i<arr.length;i++)
-        {
-            if(arr[i]<0)
-            {
-                neg.add(arr[i]);
-            }
-            else
-            {
-                pos.add(arr[i]);
-            }
-        }
-        ArrayList<Integer> ar=new ArrayList<>();
-        boolean c=true;
-        int i=0,j=0;
-        while(i<pos.size() && j<neg.size())
-        {
-            if(c)
-            {
-                ar.add(pos.get(i));
-                i++;
-                c=false;
-            }
-            else
-            {
-                ar.add(neg.get(j));
-                j++;
-                c=true;
-            }
-        }
-        while(i<pos.size())
-        {
-           ar.add(pos.get(i));
-                i++; 
-        }
-        while(j<neg.size())
-        {
-            ar.add(neg.get(j));
-            j++;
-        }
-        for(int h=0;h<ar.size();h++)
-        {
-            arr[h]=ar.get(h);
-        }
+       ArrayList<Integer> pos=new ArrayList<>();
+       ArrayList<Integer> neg=new ArrayList<>();
+       for(int i=0;i<arr.length;i++)
+       {
+           if(arr[i]>=0)
+           {
+               pos.add(arr[i]);
+           }
+           else
+           {
+               neg.add(arr[i]);
+           }
+       }
+       int i=0,j=0,k=0;
+       while(i<pos.size() && j<neg.size())
+       {
+           arr[k++]=pos.get(i);
+           arr[k++]=neg.get(j);
+           i++;
+           j++;
+       }
+       while(i<pos.size())
+       {
+           arr[k++]=pos.get(i);
+           i++;
+       }
+       while(j<neg.size())
+       {
+           arr[k++]=neg.get(j);
+           j++;
+       }
     }
 }
