@@ -33,14 +33,13 @@ class GFG{
 
 class Solution{
     static List<Integer> nextPermutation(int N, int arr[]){
-        if(arr.length<=1)
-        {
-            List<Integer> ans=new ArrayList<>();
-            return ans;
-        }
         int i=arr.length-2;
-        while(i>=0 && arr[i]>=arr[i+1])
+        while(i>=0)
         {
+            if(arr[i+1]>arr[i])
+            {
+                break;
+            }
             i--;
         }
         if(i>=0)
@@ -50,28 +49,27 @@ class Solution{
             {
                 j--;
             }
-            swap(arr,i,j);
+            swap(i,j,arr);
         }
-        reverse(arr,i+1,arr.length-1);
+        reverse(i+1,arr.length-1,arr);
         List<Integer> ans=new ArrayList<>();
-        for(int k=0;k<arr.length;k++)
+        for(int num:arr)
         {
-            ans.add(arr[k]);
+            ans.add(num);
         }
         return ans;
     }
-    static void swap(int[] arr,int i1,int i2)
+    static void swap(int i1,int i2,int[] arr)
     {
         int t=arr[i1];
         arr[i1]=arr[i2];
         arr[i2]=t;
     }
-    static void reverse(int[] arr,int i,int j)
+    static void reverse(int i,int j,int[] arr)
     {
- 
         while(i<j)
         {
-            swap(arr,i,j);
+            swap(i,j,arr);
             i++;
             j--;
         }
