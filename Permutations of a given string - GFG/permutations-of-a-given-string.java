@@ -7,6 +7,7 @@ class GFG
 	public static void main(String[] args) throws IOException
 	{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out=new PrintWriter(System.out);
         int t = Integer.parseInt(br.readLine().trim());
         while(t-->0)
         {
@@ -15,11 +16,12 @@ class GFG
             List<String> ans = obj.find_permutation(S);
             for( int i = 0; i < ans.size(); i++)
             {
-                System.out.print(ans.get(i)+" ");
+                out.print(ans.get(i)+" ");
             }
-            System.out.println();
+            out.println();
                         
         }
+        out.close();
 	}
 }
 
@@ -29,35 +31,35 @@ class GFG
 
 class Solution {
     public List<String> find_permutation(String S) {
-          List<String> ans=new ArrayList<>();
-          char[] s2=S.toCharArray();
-          Arrays.sort(s2);
-          function(0,s2,ans);
-          Collections.sort(ans);
-          return ans;
+        List<String> ans=new ArrayList<>();
+        // char[] s1=S.tocharArray();
+        permute(S,0,S.length()-1,ans);
+        Set<String> ans2=new HashSet<>(ans);
+        List<String> ans3=new ArrayList<>(ans2);
+        Collections.sort(ans3);
+        return ans3;
     }
-    public void function(int ind,char[] s,List<String> ans)
+    public void permute(String s,int l,int r,List<String> ans)
     {
-        if(ind==s.length)
+        if(l==r)
         {
-            ans.add(new String(s));
+            ans.add(s);
             return;
         }
-        for(int i=ind;i<s.length;i++)
+        for(int i=l;i<=r;i++)
         {
-            if(i>ind && s[i]==s[i-1])
-            {
-                continue;
-            }
-            swap(i,ind,s);
-            function(ind+1,s,ans);
-            swap(i,ind,s);
+            s=swap(s,l,i);
+            permute(s,l+1,r,ans);
+            s=swap(s,l,i);
         }
     }
-    public void swap(int i1,int i2,char[] s)
+    public String swap(String s,int i,int j)
     {
-        char t=s[i1];
-        s[i1]=s[i2];
-        s[i2]=t;
+        char t;
+        char[] temp=s.toCharArray();
+        t=temp[i];
+        temp[i]=temp[j];
+        temp[j]=t;
+        return String.valueOf(temp);
     }
 }
