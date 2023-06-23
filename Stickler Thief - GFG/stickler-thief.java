@@ -36,7 +36,7 @@ class Solution
     //Function to find the maximum money the thief can get.
     public int FindMaxSum(int arr[], int n)
     {
-        int[] dp=new int[arr.length];
+        int[] dp=new int[arr.length+1];
         Arrays.fill(dp,-1);
         return function(0,arr,dp);
     }
@@ -50,8 +50,8 @@ class Solution
         {
             return dp[i];
         }
-        int pick=arr[i]+function(i+2,arr,dp);
-        int notPick=function(i+1,arr,dp);
-        return dp[i]=Math.max(pick,notPick);
+        int take=arr[i]+function(i+2,arr,dp);
+        int notTake=function(i+1,arr,dp);
+        return dp[i]=Math.max(take,notTake);
     }
 }
