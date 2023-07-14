@@ -74,8 +74,7 @@ class twoStacks
        {
            return -1;
        }
-       int k=arr[top1--];
-       return k;
+       return arr[top1--];
     }
     //Function to remove an element from top of the stack2.
     int pop2()
@@ -84,8 +83,7 @@ class twoStacks
        {
            return -1;
        }
-       int k=arr[top2++];
-       return k;
+       return arr[top2++];
     }
 }
 
