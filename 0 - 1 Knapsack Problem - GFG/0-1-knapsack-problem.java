@@ -51,30 +51,34 @@ class Solution
     //Function to return max value that can be put in knapsack of capacity W.
     static int knapSack(int W, int wt[], int val[], int n) 
     { 
-        int[][] dp=new int[W+1][wt.length];
-        for(int[] d:dp)
-        {
-            Arrays.fill(d,-1);
-        }
+         int[][] dp=new int[wt.length][W+1];
+         for(int[] d:dp)
+         {
+             Arrays.fill(d,-1);
+         }
          return function(0,wt,val,W,dp);
     } 
-    static int function(int ind,int[] wt,int[] val,int w,int[][] dp)
+    static int function(int i,int[] wt,int[] val,int w,int[][] dp)
     {
-        if(w==0 || ind>=wt.length)
+        if(i==wt.length-1)
         {
+            if(wt[i]<=w)
+            {
+                return val[i];
+            }
             return 0;
         }
-        if(dp[w][ind]!=-1)
+        if(dp[i][w]!=-1)
         {
-            return dp[w][ind];
+            return dp[i][w];
         }
-        int ans1=0;
-        if(w-wt[ind]>=0)
+        int notTake=function(i+1,wt,val,w,dp);
+        int take=Integer.MIN_VALUE;
+        if(wt[i]<=w)
         {
-             ans1=val[ind]+function(ind+1,wt,val,w-wt[ind],dp);
+            take=val[i]+function(i+1,wt,val,w-wt[i],dp);
         }
-        int ans2=function(ind+1,wt,val,w,dp);
-        return dp[w][ind]=Math.max(ans1,ans2);
+        return dp[i][w]=Math.max(notTake,take);
     }
 }
 
