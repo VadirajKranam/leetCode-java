@@ -1,19 +1,23 @@
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
-       return function(0,nums,target,0);
+        return function(0,nums,target);
     }
-    public int function(int i,int[] nums,int target,int res)
+    public int function(int i,int[] nums,int sum)
     {
-        if(i==nums.length)
+        if(i==nums.length-1)
         {
-            if(res==target)
+            if(nums[i]+sum==0 && nums[i]-sum==0)
+            {
+                return 2;
+            }
+            if(nums[i]+sum==0 || nums[i]-sum==0)
             {
                 return 1;
             }
-            return 0;
+             return 0;
         }
-        int c1=function(i+1,nums,target,res+nums[i]);
-        int c2=function(i+1,nums,target,res-nums[i]);
-        return c1+c2;
+        int plus=function(i+1,nums,sum+nums[i]);
+        int minus=function(i+1,nums,sum-nums[i]);
+        return plus+minus;
     }
 }
