@@ -29,7 +29,7 @@ class Solution
     //Function to find the length of longest common subsequence in two strings.
     static int lcs(int x, int y, String s1, String s2)
     {
-        int[][] dp=new int[s1.length()][s2.length()];
+        int[][] dp=new int[s1.length()+1][s2.length()+1];
         for(int[] d:dp)
         {
             Arrays.fill(d,-1);
@@ -48,8 +48,11 @@ class Solution
         }
         if(s1.charAt(i1)==s2.charAt(i2))
         {
-            return  dp[i1][i2]=1+function(i1+1,i2+1,s1,s2,dp);
+            return 1+function(i1+1,i2+1,s1,s2,dp);
         }
-        return dp[i1][i2]=Math.max(function(i1+1,i2,s1,s2,dp),function(i1,i2+1,s1,s2,dp));
+        return dp[i1][i2]=Math.max(
+            function(i1+1,i2,s1,s2,dp),function(i1,i2+1,s1,s2,dp)
+            );
     }
+    
 }
