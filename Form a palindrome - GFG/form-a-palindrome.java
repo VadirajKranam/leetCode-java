@@ -22,32 +22,32 @@ class GFG{
 //User function Template for Java
 
 class Solution{
-    static int countMin(String str)
+    static int countMin(String s1)
     {
-          StringBuilder t1=new StringBuilder(str);
-          String t2=t1.reverse().toString();
-          int[][] dp=new int[str.length()][t2.length()];
-          for(int[] d:dp)
-          {
-              Arrays.fill(d,-1);
-          }
-          int count=lcs(t1.length()-1,t2.length()-1,str.toCharArray(),t2.toCharArray(),dp);
-          return str.length()-count;
+        StringBuilder t=new StringBuilder(s1);
+        t=t.reverse();
+        String s2=new String(t);
+        int[][] dp=new int[s1.length()+1][s2.length()+1];
+        for(int[] d:dp)
+        {
+            Arrays.fill(d,-1);
+        }
+        return s1.length()-function(0,0,s1,s2,dp);
     }
-    static int lcs(int i,int j,char[] s1,char[] s2,int[][] dp)
+    static int function(int i1,int i2,String s1,String s2,int[][] dp)
     {
-       if(i<0 || j<0)
-       {
-           return 0;
-       }
-       if(dp[i][j]!=-1)
-       {
-           return dp[i][j];
-       }
-       if(s1[i]==s2[j])
-       {
-           return 1+lcs(i-1,j-1,s1,s2,dp);
-       }
-       return dp[i][j]=Math.max(lcs(i-1,j,s1,s2,dp),lcs(i,j-1,s1,s2,dp));
+        if(i1>=s1.length() || i2>=s2.length())
+        {
+            return 0;
+        }
+        if(dp[i1][i2]!=-1)
+        {
+            return dp[i1][i2];
+        }
+        if(s1.charAt(i1)==s2.charAt(i2))
+        {
+            return dp[i1][i2]=1+function(i1+1,i2+1,s1,s2,dp);
+        }
+        return dp[i1][i2]=Math.max(function(i1+1,i2,s1,s2,dp),function(i1,i2+1,s1,s2,dp));
     }
 }
