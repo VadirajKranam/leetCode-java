@@ -39,7 +39,7 @@ class Solution{
             return dp[i];
         }
         int min=Integer.MAX_VALUE;
-        for(int j=i;j<s.length();j++)
+        for(int j=i;j<=s.length()-1;j++)
         {
             if(isPallindrome(i,j,s))
             {
@@ -49,16 +49,16 @@ class Solution{
         }
         return dp[i]=min;
     }
-    static boolean isPallindrome(int i1,int i2,String s)
+    static boolean isPallindrome(int i,int j,String s)
     {
-        while(i1<i2)
+        while(i<j)
         {
-            if(s.charAt(i1)!=s.charAt(i2))
+            if(s.charAt(i)!=s.charAt(j))
             {
                 return false;
             }
-            i1++;
-            i2--;
+            i++;
+            j--;
         }
         return true;
     }
