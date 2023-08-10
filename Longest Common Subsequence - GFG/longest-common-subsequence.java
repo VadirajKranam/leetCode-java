@@ -36,23 +36,21 @@ class Solution
         }
         return function(0,0,s1,s2,dp);
     }
-    static int function(int i1,int i2,String s1,String s2,int[][] dp)
+    static int function(int i,int j,String s1,String s2,int[][] dp)
     {
-        if(i1>=s1.length() || i2>=s2.length())
+        if(i>=s1.length() || j>=s2.length())
         {
             return 0;
         }
-        if(dp[i1][i2]!=-1)
+        if(dp[i][j]!=-1)
         {
-            return dp[i1][i2];
+            return dp[i][j];
         }
-        if(s1.charAt(i1)==s2.charAt(i2))
+        if(s1.charAt(i)==s2.charAt(j))
         {
-            return 1+function(i1+1,i2+1,s1,s2,dp);
+            return dp[i][j]=1+function(i+1,j+1,s1,s2,dp);
         }
-        return dp[i1][i2]=Math.max(
-            function(i1+1,i2,s1,s2,dp),function(i1,i2+1,s1,s2,dp)
-            );
+        return dp[i][j]=Math.max(function(i+1,j,s1,s2,dp),function(i,j+1,s1,s2,dp));
     }
     
 }
