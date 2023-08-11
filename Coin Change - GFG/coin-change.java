@@ -26,31 +26,32 @@ class GfG {
 
 class Solution {
     public long count(int coins[], int N, int sum) {
-       long[][] dp=new long[coins.length][sum+1];
-        for(long[] d:dp)
-        {
-            Arrays.fill(d,-1l);
-        }
-        return function(0,coins,sum,dp);
+       long[][] dp=new long[coins.length+1][sum+1];
+       for(long[] d:dp)
+       {
+           Arrays.fill(d,-1l);
+       }
+       return function(0,coins,sum,dp);
     }
     public long function(int i,int[] coins,int sum,long[][] dp)
     {
         if(sum==0)
         {
-            return 1l;
+            return 1;
         }
-        if(i==coins.length || sum<0)
+        if(i>=coins.length)
         {
             return 0;
         }
-        if(dp[i][sum]!=-1)
+        if(dp[i][sum]!=-1l)
         {
             return dp[i][sum];
         }
-        return dp[i][sum]=function(i,coins,sum-coins[i],dp)+function(i+1,coins,sum,dp);
+        long ans1=0;
+        if(coins[i]<=sum)
+        {
+            ans1=function(i,coins,sum-coins[i],dp);
+        }
+        return dp[i][sum]=ans1+function(i+1,coins,sum,dp);
     }
 }
-
-
-
-
