@@ -37,19 +37,42 @@ public class Main {
 
 class Solution {
     int count(int[] arr, int n, int x) {
-        int count=0;
-        for(int i=0;i<arr.length;i++)
-        {
-            if(arr[i]==x)
-            {
-                while(i<arr.length && arr[i]==x)
-                {
-                    i++;
-                    count++;
-                }
-                return count;
-            }
-        }
-        return count;
+      int ind=-1;
+      int i=0,j=arr.length-1;
+      while(i<=j)
+      {
+          int m=i+(j-i)/2;
+          if(arr[m]==x)
+          {
+              ind=m;
+              break;
+          }
+          else if(arr[m]>x)
+          {
+              j--;
+          }
+          else
+          {
+              i++;
+          }
+      }
+      if(ind==-1)
+      {
+          return 0;
+      }
+      int count=0;
+      int b=ind;
+      while(b>=0 && arr[b]==x)
+      {
+          count++;
+          b--;
+      }
+      b=ind+1;
+      while(b<arr.length && arr[b]==x)
+      {
+          count++;
+          b++;
+      }
+      return count;
     }
 }
