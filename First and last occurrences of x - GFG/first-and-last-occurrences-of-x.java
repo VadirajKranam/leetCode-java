@@ -13,51 +13,50 @@ import java.util.*;
 
 class GFG
 {
-    ArrayList<Long> find(long arr[], int n, int x)
+    ArrayList<Integer> find(int arr[], int n, int x)
     {
-        int first=-1;
-        int last=-1;
-        int low=0,high=arr.length-1;
-        while(low<=high)
+        int l=0,h=arr.length-1,mid=-1;
+        while(l<=h)
         {
-            int mid=low+(high-low)/2;
-            if(arr[mid]==(long)x)
+            int m=l+(h-l)/2;
+            if(arr[m]==x)
             {
-                first=mid;
-                last=mid;
+                mid=m;
                 break;
             }
-            else if(arr[mid]<(long)x)
+            else if(arr[m]>x)
             {
-                low=mid+1;
+                h--;
             }
             else
             {
-                high=mid-1;
+                l++;
             }
         }
-        if(first==-1)
+        if(mid==-1)
         {
-        ArrayList<Long> ans=new ArrayList<>();
-        ans.add(-1l);
-        ans.add(-1l);
-        return ans;
+            //System.out.println(mid);
+            ArrayList<Integer> ans=new ArrayList<>();
+            ans.add(-1);
+            ans.add(-1);
+            return ans;
         }
-        while(first>=0 && arr[first]==(long)x)
+        ArrayList<Integer> ans=new ArrayList<>();
+        int first=mid;
+        while(first>=0 && arr[first]==x)
         {
             first--;
         }
-        while(last<arr.length && arr[last]==(long)x)
+        ans.add(first+1);
+        int last=mid;
+        while(last<arr.length && arr[last]==x)
         {
             last++;
         }
-        first+=1;
-        last-=1;
-        ArrayList<Long> ans=new ArrayList<>();
-        ans.add((long)first);
-        ans.add((long)last);
+        ans.add(last-1);
         return ans;
     }
+    
 }
 
 
@@ -83,12 +82,12 @@ class Array {
 //            //int y =Integer.parseInt(q[2]);
             String line1 = br.readLine();
             String[] a1 = line1.trim().split("\\s+");
-            long arr[] = new long[n];
+            int arr[] = new int[n];
             for (int i = 0; i < n; i++) {
-                arr[i] = Long.parseLong(a1[i]);
+                arr[i] = Integer.parseInt(a1[i]);
             }
             GFG ob = new GFG();
-            ArrayList<Long> ans=ob.find(arr,n,x);
+            ArrayList<Integer> ans=ob.find(arr,n,x);
             System.out.println(ans.get(0)+" "+ans.get(1));
         }
     }
