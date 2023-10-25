@@ -35,29 +35,29 @@ class GFG{
 class Solution{
     static int knapSack(int N, int W, int val[], int wt[])
     {
-        int[][] dp=new int[val.length][W+1];
+        int[][] dp=new int[N][W+1];
         for(int[] d:dp)
         {
             Arrays.fill(d,-1);
         }
-        return function(0,val,wt,W,dp);
+        return function(0,dp,W,val,wt);
     }
-    static int function(int i,int[] v,int[] wt,int w,int[][] dp)
+    static int function(int i,int[][] dp,int w,int[] val,int[] wt)
     {
-        if(i==v.length-1)
+        if(i==val.length)
         {
-            return (w/wt[i])*v[i];
+            return 0;
         }
         if(dp[i][w]!=-1)
         {
             return dp[i][w];
         }
-        int notPick=function(i+1,v,wt,w,dp);
-        int pick=Integer.MIN_VALUE;
+        int notTake=0+function(i+1,dp,w,val,wt);
+        int take=Integer.MIN_VALUE;
         if(wt[i]<=w)
         {
-            pick=v[i]+function(i,v,wt,w-wt[i],dp);
+            take=val[i]+function(i,dp,w-wt[i],val,wt);
         }
-       return  dp[i][w]=Math.max(notPick,pick);
+       return dp[i][w]=Math.max(notTake,take);
     }
 }
